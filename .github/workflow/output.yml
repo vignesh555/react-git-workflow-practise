@@ -1,0 +1,32 @@
+name: Multiple jobs
+on: push
+jobs:
+  lint-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v3
+      - name: Npm install
+        run: npm ci
+      - name: Npm lint
+        run: npm run lint
+  test-job:
+    needs: lint-job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v3
+      - name: Npm install
+        run: npm ci
+      - name: Npm lint
+        run: npm run test
+  build-job:
+    needs: test-job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v3
+      - name: Npm install
+        run: npm ci
+      - name: Npm lint
+        run: npm run build
